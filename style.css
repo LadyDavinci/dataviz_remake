@@ -1,0 +1,95 @@
+/* Reset body spacing so the GIF fills the entire viewport without scrollbars */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background: #fdf6ec;
+  font-family: Georgia, serif;
+  color: #222;
+}
+
+/* Full Screen GIF Landing Header */
+.hero-header {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), 
+                    url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2kzbmVxNG9reTE2dzA0OHF2eXF6dXBuenRubHIwNmVybzh1eWpsMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kuRvhZM7mugE0/giphy.gif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+  /* Forces exact screen dimensions */
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh; /* Handles dynamic mobile toolbars cleanly */
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Big Serif Title in the Middle of GIF */
+.hero-header h1 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: normal;
+  color: #ffffff;
+  text-shadow: 0px 4px 15px rgba(0, 0, 0, 0.9);
+  letter-spacing: 2px;
+  padding: 0 20px;
+}
+
+/* Main Container centered on the page after scrolling */
+.content-container {
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers items (legend, grid) horizontally */
+}
+
+/* Justified Subtitle Text Below the GIF */
+.subtitle {
+  font-family: Georgia, serif;
+  color: #444;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  text-align: justify; /* Justified text alignment */
+  max-width: 750px;    /* Constrains line width for comfortable reading */
+  margin-top: 0;
+  margin-bottom: 40px;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.8em;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  margin-bottom: 30px;
+}
+.legend .she { color: #d9534f; }
+.legend .he { color: #3a6fb0; }
+.legend-bar {
+  width: 220px;
+  height: 14px;
+  background: linear-gradient(to right, #d9534f, #999, #3a6fb0);
+  border-radius: 3px;
+}
+
+/* 40 columns x 20 rows grid */
+.grid-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(40, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 2px;
+}
