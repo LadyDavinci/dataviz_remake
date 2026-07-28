@@ -1,32 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The top 800 words paired with "she" or "he"</title>
+<style>
+  body {
+    font-family: Georgia, serif;
+    background: #fdf6ec;
+    color: #222;
+    padding: 40px 50px;
+    margin: 0;
+  }
+  h1 { font-size: 1.9em; margin-bottom: 4px; }
+  .subtitle {
+    font-family: Helvetica, Arial, sans-serif;
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
+
+  .legend {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.8em;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    margin-bottom: 30px;
+  }
+  .legend .she { color: #d9534f; }
+  .legend .he { color: #3a6fb0; }
+  .legend-bar {
+    width: 220px;
+    height: 14px;
+    background: linear-gradient(to right, #d9534f, #999, #3a6fb0);
+    border-radius: 3px;
+  }
+
+  /* 40 columns x 20 rows = 800 units, each cell forced to a true square */
+  .grid-wrap {
+    position: relative;
+    max-width: 1200px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(40, 1fr);
+    grid-auto-rows: 1fr;
+    gap: 2px;
+  }
+
+  .unit {
+    aspect-ratio: 1 / 1;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .unit.has-example {
+    outline: 1px solid rgba(0,0,0,0.55);
+    outline-offset: -1px;
+  }
+  .unit:hover {
+    outline: 2px solid #222;
+  }
+
+  /* single shared tooltip, positioned by JS and clamped to .grid-wrap */
+  #tooltip {
+    display: none;
+    position: absolute;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    white-space: normal;
+    text-align: left;
+    line-height: 1.5;
+    max-width: 260px;
+    width: max-content;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    border: 1px solid rgba(0,0,0,0.3);
+    z-index: 10;
+    pointer-events: none;
+  }
+  #tooltip .word-label {
+    display: block;
+    margin-bottom: 4px;
+  }
+  #tooltip .example {
+    display: block;
+    font-weight: normal;
+    font-style: italic;
+    margin-top: 3px;
+  }
+  #tooltip .scripts {
+    display: block;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(0,0,0,0.25);
+    font-weight: normal;
+    font-style: normal;
+  }
+  #tooltip .quote {
+    display: block;
+    margin-top: 6px;
+  }
+  #tooltip .quote:first-child { margin-top: 0; }
+  #tooltip .quote-highlight {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+</style>
+</head>
 <body>
 
-  <!-- Full-screen GIF Section -->
-  <header class="hero-header">
-    <h1>She says, He knows</h1>
-  </header>
+  <h1>The top 800 words paired with &ldquo;she&rdquo; or &ldquo;he&rdquo;</h1>
+  <p class="subtitle">Recreated as a 40×20 unit grid. Hover a square to see its word &mdash; outlined squares also contain an example of their usage in screen direction.</p>
 
-  <!-- Content revealed upon scrolling -->
-  <main class="content-container">
+  <div class="legend">
+    <span class="she">MORE "SHE"</span>
+    <div class="legend-bar"></div>
+    <span class="he">MORE "HE"</span>
+  </div>
 
-    <!-- Centered block with justified text alignment -->
-    <p class="subtitle">
-      Recreated as a 40&times;20 unit grid. Hover a square to see its word &mdash; outlined squares also contain an example of their usage in screen direction.
-    </p>
-
-    <div class="legend">
-      <span class="she">MORE "SHE"</span>
-      <div class="legend-bar"></div>
-      <span class="he">MORE "HE"</span>
-    </div>
-
-    <div class="grid-wrap">
-      <div class="grid" id="grid"></div>
-      <div id="tooltip"></div>
-    </div>
-
-  </main>
+  <div class="grid-wrap">
+    <div class="grid" id="grid"></div>
+    <div id="tooltip"></div>
+  </div>
 
   <script>
-    // ... your JS script remains untouched ...
+    // Words transcribed in the same order as the source chart (she-leaning -> he-leaning).
+    // A trailing "*" marks words that were underlined (have a hover example) in the original.
+    // Replace the placeholder example text with real quotes from the source before publishing.
+    const words = [
+"snuggles*","giggles","squeals","sobs","weeps","blushes","clings","rocks","shrieks","hugs","shrinks","gasps","responds","trembles","pets","flinches","arches","skips","utters","shudders","startles","buries","swats","murmurs","resists",
+"hovers","caresses","awakens","shivers","screams","dances","beats","absently","flees","cleans*","stirs","straddles","cries","moans*","bites","realises","mouths","accepts","wore","smiles","laughs*","wrote","serves","scoots","liked",
+"arranges","scampers","storms","twirls*","softens","ignores","softly","faints","wonders","fades","sags","hesitates","casts","applies","hisses","fiddles","kisses","sings","awkwardly","smokes","stretches","sips","unbuttons","stiffens",
+"hurriedly","hurries","dries","look","locates","threw","smooths","nods","stubs","instantly","reappears","wraps","clearly","refuses","tiptoes","lingers*","beams","pivots","curls","glides","strokes","meant","abruptly","retrieves","bursts*",
+"rakes","relents","reluctantly","frantically","understands","fidgets","breaks","recoils","hums","looked","pretends","trails","frowns","retreats*","gonna","licks","touches","reacts","nearly","sighs","backs","embraces","squirms","panics",
+"yelps","ends","allows","flashes","senses","exits","gathers","collects","receives","drapes","folds","undoes","answers*","shakes","instinctively","replies","told","freezes","resumes","creeps*","calms","gives","rushes","sails","tentatively",
+"thrashes","becomes","types*","avoids","clips","struggles","fights","considers","leaves","thumbs","cradles","covers","blinks","dabs","meets","rests","regards","tilts","attacks*","darts","eyes","brushes","descends","gently","nervously",
+"returns","forces","closes","fixes","inhales*","flings","scoops","desperately","plunges","appears","glimpses","clicks","halts","wakes","bolts","slaps","fumbles","quickly","wears","clasps","faces","feeds","barely","shrugs","believes",
+"floats","left","whacks","blows","immediately","emerges","seems","slips","almost","stares*","tugs","happily","hates","slices","runs","leans","sounds","washes","swallows","cranes","observes","accidentally","marches","rifles","squeezes",
+"begins","kneels","turns","leads","snarls","rolls","wipes","whirls","tell","flushes","peeks","shuts","sits","grimaces*","frees","put","calls","glares","tucks","like","plops","scurries","whispers","tries","remains",
+"actually","continues","pinches","tells","lets","yawns","disappears","heads","looks","chokes","discovers","plugs","springs","watches","cautiously","opens","clutches","studies","dropped","massages","obeys","suddenly*","loves","scowls","crosses",
+"packs","scribbles","spits","sneaks","puts","likes","just","lashes","topples","hangs","lies","angles","starts","claps","adds","flicks","slowly","cups","angrily","really","stops*","pours","jabs","traces","unzips",
+"crawls","died","grasps","slugs","steadies","breathes","glances","pushes","directs","inches","hands","reads","comes","unfolds","winds","attempts","rubs","snorts","walks","drifts","sinks","hides","goes","swivels","feels",
+"keeps","sprays","sways","means","ducks*","races","repeats","used","steps","sends","finishes","talking","trips","locks","waits*","gets","snatches","chooses","obviously","takes","decides","plucks","slides","moves","peers",
+"holds","claws","already","stomps*","swipes","asks","admires","met","said","stands","buttons","owns","says","sets","strips","must","wanted","focuses","fell","unwraps","edges","unlocks","remembers*","shines","reaches",
+"jumps","always","places","climbs","stumbles","handles","leafs","needed","passed","surreptitiously","concentrates","helps","interrupts","reels","scrambles*","steels","blocks","clenches","floors","gags","splashes*","rips","notices","knocks",
+"listens","quietly","jerks*","bumps","wants","lays","kicks","flies","makes","picks","throws*","casually","scans","winces","might","dangles","hefts","flails","waves","dresses","realizes","passes","catches",
+"plants","thinks","knows*","rings","empties","hears","sweeps","may","signs","wrenches","swims","shares","started","recovers","hops","props","tightens","indicates","hear","dashes","got","peels","will","silently","probably",
+"grows","whips","finds","spins","pulls","switches","lights","assumes","ties","digs","hopes","wheels","lines","performs","settles","tenses","sniffs","stabs","wanders","downs","pounds","notes","slams","twists","shows",
+"weaves","bends","bounces","curses","expects","hastily","pokes","can","sees","acts","scrolls","brings","arrives","needs","follows","get","zips","manages","proceeds","deposits","hardly","strikes","exhales*","still","smells",
+"came","tears","yanks","lifts","knew","shifts","presses","grabs","excuses","straightens","hustles","speeds","recognizes","carries","pays","also","falls","stays","tastes","drags","never","speaks","dials","turned","slows",
+"relaxes","brought","dumps","sticks","changes","know","come","lowers","flips","bought","sleeps","greets","registers","succeeds","now","even","withdraws","cracks","writhes","saw","nudges","scratches","hobbles","steals","pauses",
+"collapses","offers","puffs","grinds","braces","thought","expected","levels","gave","hits","drops","spots","lurches","clambers","ever","eventually","snaps","writes","searches","gazes","approaches","selects","eases","dips","cocks",
+"groans","lives","works","winks","swerves","grips","fills","rummages","loved","joins","regains","wiggles","talks","beckons","gulps","maneuvers","zooms","stalks","seizes","vanishes","points","thrusts","hauls","leaps","hit",
+"adjusts","heard","shoots","refers","deals","honks","rams","releases","clears","nears","pries","hurls","mutters","extends","sucks","trudges","found","removes","accelerates","orders","produces","inspects","tumbles","cuts","calmly",
+"presents","scrapes","crushes","pops","checks","drinks","spies","drives","punches","doubles","jams","slings","smirks","fingers","slumps","prepares","wrestles","plays","counts","coughs*","pats","gestures","raises","tosses","lived",
+"stoops","say","contemplates","hoists","examines","raps","unscrews","uses","draws","squats","shoves","sprints","rattles","controls","hooks","surfaces","loses","delivers","lunges","dodges","addresses","called","consults","eats","falters",
+"forgot","swings","shouts","dies","inserts","flops*","ushers","want","carefully","heaves","dives","chases","crumples","keys","shuffles","stuffs","went","crouches*","demonstrates","strides","attaches","cranks","squints","double","gingerly",
+"tried","fishes","mounts","explains","fires","tests","revs","guides","taps","reveals","won","advances","felt","surveys","signals","enjoys","killed","launches","made","first","overhears","blasts","bangs","charges","took",
+"spreads","asked","mimes","see","pumps","motions","positions","smacks","simply","pockets","parks","tips","trots","wishes","roars","staggers*","flexes","rounds","aims","saunters","guns","lands","clamps","extracts","grits",
+"forgets*","misses","paces","going","rides","grins","growls","screws","steers","stamps","plummets","chuckles","loosens","explodes","dismounts","pins","circles","hammers","slashes*","limps","vomits","strains","yells","mumbles","chews",
+"grunts","ponders","strolls","whistles","crashes","bounds","salutes","gropes","displays","replaces","lost*","smashes*","spills","loads","fails","stole*","barks*","ambles*","exchanges*","bows","drains","figures*","pitches","rears","vaults",
+"kills*","howls*","shot*","gallops*","straps*"
+    ].map(w => w.endsWith("*") ? { word: w.slice(0, -1), example: true } : { word: w, example: false });
+
+    const total = words.length; // should be ~800; grid auto-fits whatever count is here
+
+    function rankToColor(i, total) {
+      const t = i / (total - 1); // 0 = full "she", 1 = full "he"
+      const she = [217, 83, 79];
+      const mid = [153, 153, 153];
+      const he  = [58, 111, 176];
+      let c1, c2, localT;
+      if (t < 0.5) { c1 = she; c2 = mid; localT = t / 0.5; }
+      else { c1 = mid; c2 = he; localT = (t - 0.5) / 0.5; }
+      const rgb = c1.map((v, k) => Math.round(v + (c2[k] - v) * localT));
+      return `rgb(${rgb.join(",")})`;
+    }
+
+    // Script excerpts for words with real source examples.
+    // Fill in more entries here as you source real quotes for the other outlined squares.
+    const scriptExamples = {
+      snuggles: [
+        "She snuggles up to him as they watch the movie.",
+        "At this, she snuggles up to him. Oz smiles confidently.",
+        "She snuggles up to him, strokes his back.",
+        "She snuggles into him and closes her eyes. Holden stares...",
+        "Malkovich kisses Maxine. She snuggles close to him. ...she snuggles into his arms. True love, at last...",
+        "She snuggles into him, suddenly utterly secure."
+      ],
+      straps: [
+        "Bob continues to hold up the weight of the backpack as he straps...",
+        "...it very much, so he straps ten sticks...",
+        "Todd has begun to dress. He straps a sheath knife to one ankle...",
+        "He straps on a holster under his sealskin coat.",
+        "He straps one to each Kid's wrist.",
+        "As he straps on his wristbrace he peers down the lane... he straps the even-larger gear pack to himself."
+      ]
+    };
+
+    // Bold + underline the "she/he <word>" phrase inside a quote, keeping original casing.
+    function highlightQuote(word, quote) {
+      const pattern = new RegExp(`\\b(she|he)\\s+${word}\\b`, "gi");
+      return quote.replace(pattern, match => `<span class="quote-highlight">${match}</span>`);
+    }
+
+    const grid = document.getElementById("grid");
+    const wrap = document.querySelector(".grid-wrap");
+    const tooltip = document.getElementById("tooltip");
+
+    function buildTooltipContent(w) {
+      tooltip.innerHTML = "";
+      tooltip.style.background = w.color;
+
+      const label = document.createElement("span");
+      label.className = "word-label";
+      label.textContent = w.word;
+      tooltip.appendChild(label);
+
+      if (w.example) {
+        const quotes = scriptExamples[w.word];
+        if (quotes) {
+          const scriptBox = document.createElement("span");
+          scriptBox.className = "scripts";
+          quotes.forEach(q => {
+            const line = document.createElement("span");
+            line.className = "quote";
+            line.innerHTML = highlightQuote(w.word, q);
+            scriptBox.appendChild(line);
+          });
+          tooltip.appendChild(scriptBox);
+        } else {
+          const ex = document.createElement("span");
+          ex.className = "example";
+          ex.textContent = "example needed from source";
+          tooltip.appendChild(ex);
+        }
+      }
+    }
+
+    // Position the shared tooltip next to a given cell, clamped fully inside .grid-wrap.
+    function positionTooltip(cell) {
+      tooltip.style.display = "block";
+      const wrapRect = wrap.getBoundingClientRect();
+      const cellRect = cell.getBoundingClientRect();
+      const tipRect = tooltip.getBoundingClientRect();
+
+      const gap = 6;
+      let top = (cellRect.top - wrapRect.top) - tipRect.height - gap; // try above
+      if (top < 0) top = (cellRect.bottom - wrapRect.top) + gap;      // flip below if no room
+      top = Math.max(0, Math.min(top, wrapRect.height - tipRect.height));
+
+      let left = (cellRect.left - wrapRect.left) + cellRect.width / 2 - tipRect.width / 2;
+      left = Math.max(0, Math.min(left, wrapRect.width - tipRect.width));
+
+      tooltip.style.top = `${top}px`;
+      tooltip.style.left = `${left}px`;
+    }
+
+    words.forEach((w, i) => {
+      w.color = rankToColor(i, total);
+
+      const cell = document.createElement("div");
+      cell.className = "unit" + (w.example ? " has-example" : "");
+      cell.style.background = w.color;
+      cell.dataset.index = i;
+
+      grid.appendChild(cell);
+    });
+
+    // Event delegation: one listener instead of 800.
+    grid.addEventListener("mouseover", e => {
+      const cell = e.target.closest(".unit");
+      if (!cell) return;
+      const w = words[cell.dataset.index];
+      buildTooltipContent(w);
+      positionTooltip(cell);
+    });
+    grid.addEventListener("mouseout", e => {
+      const related = e.relatedTarget;
+      if (related && related.closest && related.closest(".unit")) return;
+      tooltip.style.display = "none";
+    });
   </script>
 </body>
+</html>
