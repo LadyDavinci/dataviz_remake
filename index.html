@@ -6,7 +6,7 @@
 <style>
   body {
     font-family: Georgia, serif;
-    background: #faf9f6; /* Off-white background added here */
+    background: #faf9f6;
     color: #222;
     padding: 0;
     margin: 0;
@@ -48,18 +48,37 @@
     padding: 0 20px;
   }
 
-  /* Subtitle text below the main heading */
+  /* Subtitle blocks below the main heading */
   .hero-subtitle {
     position: relative;
     z-index: 2;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 1.2rem;
     color: #ffffff;
     text-align: center;
     text-shadow: 1px 2px 8px rgba(0, 0, 0, 0.8);
-    margin-top: 20px;
-    line-height: 1.6;
     padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .main-sub {
+    font-family: Georgia, serif; /* Serif font */
+    font-size: 1.5rem; /* Slightly bigger */
+    margin-top: 20px;
+    line-height: 1.4;
+    max-width: 800px;
+  }
+
+  .author-1 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 1.1rem;
+    margin-top: 15px; /* Little gap */
+  }
+
+  .author-2 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 1.1rem;
+    margin-top: 35px; /* Even more gap */
   }
 
   .scroll-hint {
@@ -95,6 +114,17 @@
     margin: 0 auto;
   }
 
+  .article-text {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .chart-header {
+    margin-top: 50px;
+  }
+
   h1 { font-size: 1.9em; margin-bottom: 4px; }
   .subtitle {
     font-family: Helvetica, Arial, sans-serif;
@@ -126,6 +156,7 @@
   .grid-wrap {
     position: relative;
     width: 100%;
+    margin-bottom: 50px;
   }
   .grid {
     display: grid;
@@ -203,33 +234,52 @@
     <img src="animation.gif" alt="Background GIF" id="hero-gif">
     <div class="hero-title">She says, he nods</div>
     <div class="hero-subtitle">
-      Analyzing gender tropes in film with screen direction from 2,000 scripts.<br>
-      By <strong><u>Julia Silge</u></strong> + <strong><u>Russell Samora</u></strong> <strong><u>Amber Thomas</u></strong> <strong><u>Hanah Anderson</u></strong>
+      <div class="main-sub">Analyzing gender tropes in film with screen direction from 2,000 scripts.</div>
+      <div class="author-1">By <strong><u>Julia Silge</u></strong></div>
+      <div class="author-2">Russell Samora Amber Thomas Hanah Anderson</div>
     </div>
     <div class="scroll-hint">Scroll down ↓</div>
   </div>
 
-  <!-- Main Grid & Chart Content -->
+  <!-- Main Content Aligned to Margins -->
   <div class="content-container">
-    <h1>The top 800 words paired with &ldquo;she&rdquo; or &ldquo;he&rdquo;</h1>
-    <p class="subtitle">Recreated as a 40×20 unit grid. Hover a square to see its word &mdash; outlined squares also contain an example of their usage in screen direction.</p>
+    
+    <!-- Intro Paragraphs -->
+    <p class="article-text">In April 2016, we broke down film dialogue by gender. The essay presented an imbalance in which men delivered more lines than women across 2,000 screenplays. But quantity of lines is only part of the story. What characters do matters, too.</p>
+    
+    <p class="article-text">Gender tropes (e.g., women are pretty/men act, men don’t cry) are just as important as dialogue in understanding how men and women are portrayed on-screen. These stereotypes result from many components, including casting, acting, directing, etc.</p>
+    
+    <p class="article-text">The film script, arguably, is ground zero—the source material by which everyone is influenced. And in film scripts, there’s dialogue and screen direction. For example, let’s take this iconic scene from Titanic:</p>
 
-    <div class="legend">
-      <span class="she">MORE "SHE"</span>
-      <div class="legend-bar"></div>
-      <span class="he">MORE "HE"</span>
+    <!-- Original Chart Details -->
+    <div class="chart-header">
+      <h1>The top 800 words paired with &ldquo;she&rdquo; or &ldquo;he&rdquo;</h1>
+      <p class="subtitle">Recreated as a 40×20 unit grid. Hover a square to see its word &mdash; outlined squares also contain an example of their usage in screen direction.</p>
+
+      <div class="legend">
+        <span class="she">MORE "SHE"</span>
+        <div class="legend-bar"></div>
+        <span class="he">MORE "HE"</span>
+      </div>
     </div>
 
+    <!-- The Data Grid -->
     <div class="grid-wrap">
       <div class="grid" id="grid"></div>
       <div id="tooltip"></div>
     </div>
+
+    <!-- Outro Paragraphs -->
+    <p class="article-text">There are some directions where the writer’s gender makes no difference. Relative to men, women gasp, hurry, smile, hesitate, and stir (mostly while cooking), regardless of whether the writer is a man or a woman. Men are consistently more likely to smash things, draw their weapons, grin, wink, point, talk, and speak.</p>
+
+    <p class="article-text">When describing the opposite gender, both men and women use some overtly romantic and sexual words, such as “kiss” and “stroke,” as well as more subtle words including “respond” and “embrace.”</p>
+
+    <p class="article-text">But there are differences. In our data set, 15% of film writers were women; 85% were men. Should Hollywood reach gender parity, we’d expect fewer women characters to respond, kiss, and cry. The increase in female writers would also mean women would be more likely to spy, find things, and, perhaps most remarkably, write on-screen.</p>
+
   </div>
 
   <script>
     // Words transcribed in the same order as the source chart (she-leaning -> he-leaning).
-    // A trailing "*" marks words that were underlined (have a hover example) in the original.
-    // Replace the placeholder example text with real quotes from the source before publishing.
     const words = [
 "snuggles*","giggles","squeals","sobs","weeps","blushes","clings","rocks","shrieks","hugs","shrinks","gasps","responds","trembles","pets","flinches","arches","skips","utters","shudders","startles","buries","swats","murmurs","resists",
 "hovers","caresses","awakens","shivers","screams","dances","beats","absently","flees","cleans*","stirs","straddles","cries","moans*","bites","realises","mouths","accepts","wore","smiles","laughs*","wrote","serves","scoots","liked",
@@ -266,7 +316,7 @@
 "kills*","howls*","shot*","gallops*","straps*"
     ].map(w => w.endsWith("*") ? { word: w.slice(0, -1), example: true } : { word: w, example: false });
 
-    const total = words.length; // should be ~800; grid auto-fits whatever count is here
+    const total = words.length; 
 
     function rankToColor(i, total) {
       const t = i / (total - 1); // 0 = full "she", 1 = full "he"
@@ -280,7 +330,6 @@
       return `rgb(${rgb.join(",")})`;
     }
 
-    // Script excerpts for words with real source examples.
     const scriptExamples = {
       snuggles: [
         "She snuggles up to him as they watch the movie.",
@@ -300,7 +349,6 @@
       ]
     };
 
-    // Bold + underline the "she/he <word>" phrase inside a quote, keeping original casing.
     function highlightQuote(word, quote) {
       const pattern = new RegExp(`\\b(she|he)\\s+${word}\\b`, "gi");
       return quote.replace(pattern, match => `<span class="quote-highlight">${match}</span>`);
@@ -340,7 +388,6 @@
       }
     }
 
-    // Position the shared tooltip next to a given cell, clamped fully inside .grid-wrap.
     function positionTooltip(cell) {
       tooltip.style.display = "block";
       const wrapRect = wrap.getBoundingClientRect();
@@ -370,7 +417,6 @@
       grid.appendChild(cell);
     });
 
-    // Event delegation: one listener instead of 800.
     grid.addEventListener("mouseover", e => {
       const cell = e.target.closest(".unit");
       if (!cell) return;
