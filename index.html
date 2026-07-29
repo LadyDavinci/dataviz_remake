@@ -8,9 +8,76 @@
     font-family: Georgia, serif;
     background: #fdf6ec;
     color: #222;
-    padding: 40px 50px;
+    padding: 0;
     margin: 0;
   }
+
+  /* Fullscreen Top Hero Section for GIF */
+  .hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .hero-section img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 1;
+  }
+
+  /* Big, Bold, Serif Centered Text */
+  .hero-title {
+    position: relative;
+    z-index: 2;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(4rem, 8vw, 7rem); /* Scales beautifully based on screen size */
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    text-shadow: 2px 4px 12px rgba(0, 0, 0, 0.7); /* Ensures it's readable over the GIF */
+    padding: 0 20px;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.85em;
+    font-weight: bold;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 8px 16px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+    animation: bounce 2s infinite;
+    z-index: 2;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+    40% { transform: translate(-50%, -8px); }
+    60% { transform: translate(-50%, -4px); }
+  }
+
+  /* Container wrapping original layout below the fold */
+  .content-container {
+    padding: 40px 50px;
+  }
+
   h1 { font-size: 1.9em; margin-bottom: 4px; }
   .subtitle {
     font-family: Helvetica, Arial, sans-serif;
@@ -137,18 +204,28 @@
 </head>
 <body>
 
-  <h1>The top 800 words paired with &ldquo;she&rdquo; or &ldquo;he&rdquo;</h1>
-  <p class="subtitle">Recreated as a 40×20 unit grid. Hover a square to see its word &mdash; outlined squares also contain an example of their usage in screen direction.</p>
-
-  <div class="legend">
-    <span class="she">MORE "SHE"</span>
-    <div class="legend-bar"></div>
-    <span class="he">MORE "HE"</span>
+  <!-- Fullscreen Top GIF Header -->
+  <div class="hero-section">
+    <img src="animation.gif" alt="Background GIF" id="hero-gif">
+    <div class="hero-title">She says, he nods</div>
+    <div class="scroll-hint">Scroll down ↓</div>
   </div>
 
-  <div class="grid-wrap">
-    <div class="grid" id="grid"></div>
-    <div id="tooltip"></div>
+  <!-- Main Grid & Chart Content -->
+  <div class="content-container">
+    <h1>The top 800 words paired with &ldquo;she&rdquo; or &ldquo;he&rdquo;</h1>
+    <p class="subtitle">Recreated as a 40×20 unit grid. Hover a square to see its word &mdash; outlined squares also contain an example of their usage in screen direction.</p>
+
+    <div class="legend">
+      <span class="she">MORE "SHE"</span>
+      <div class="legend-bar"></div>
+      <span class="he">MORE "HE"</span>
+    </div>
+
+    <div class="grid-wrap">
+      <div class="grid" id="grid"></div>
+      <div id="tooltip"></div>
+    </div>
   </div>
 
   <div class="fullscreen-gif-overlay" id="fullscreen-gif-overlay" aria-hidden="true">
@@ -210,7 +287,6 @@
     }
 
     // Script excerpts for words with real source examples.
-    // Fill in more entries here as you source real quotes for the other outlined squares.
     const scriptExamples = {
       snuggles: [
         "She snuggles up to him as they watch the movie.",
@@ -241,20 +317,16 @@
     const tooltip = document.getElementById("tooltip");
     const fullscreenOverlay = document.getElementById("fullscreen-gif-overlay");
     const fullscreenImage = document.getElementById("fullscreen-gif-image");
-    const fullscreenGifUrl = "YOUR_GIF_URL_HERE";
+    
+    // Relative path to local GIF file
+    const fullscreenGifUrl = "animation.gif";
     let hasShownFullscreenGif = false;
 
     function showFullscreenGif() {
       if (hasShownFullscreenGif) return;
       hasShownFullscreenGif = true;
 
-      if (fullscreenGifUrl && fullscreenGifUrl !== "YOUR_GIF_URL_HERE") {
-        fullscreenImage.src = fullscreenGifUrl;
-      } else {
-        fullscreenImage.removeAttribute("src");
-        fullscreenImage.alt = "GIF URL not configured yet";
-      }
-
+      fullscreenImage.src = fullscreenGifUrl;
       fullscreenOverlay.classList.add("is-visible");
       fullscreenOverlay.setAttribute("aria-hidden", "false");
     }
