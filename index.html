@@ -6,7 +6,7 @@
 <style>
   body {
     font-family: Georgia, serif;
-    background: #fdf6ec;
+    background: #faf9f6; /* Off-white background added here */
     color: #222;
     padding: 0;
     margin: 0;
@@ -19,6 +19,7 @@
     height: 100vh;
     background: #000;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     overflow: hidden;
@@ -39,11 +40,25 @@
     position: relative;
     z-index: 2;
     font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(4rem, 8vw, 7rem); /* Scales beautifully based on screen size */
+    font-size: clamp(4rem, 8vw, 7rem);
     font-weight: bold;
     color: #ffffff;
     text-align: center;
-    text-shadow: 2px 4px 12px rgba(0, 0, 0, 0.7); /* Ensures it's readable over the GIF */
+    text-shadow: 2px 4px 12px rgba(0, 0, 0, 0.7);
+    padding: 0 20px;
+  }
+
+  /* Subtitle text below the main heading */
+  .hero-subtitle {
+    position: relative;
+    z-index: 2;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 1.2rem;
+    color: #ffffff;
+    text-align: center;
+    text-shadow: 1px 2px 8px rgba(0, 0, 0, 0.8);
+    margin-top: 20px;
+    line-height: 1.6;
     padding: 0 20px;
   }
 
@@ -75,7 +90,9 @@
 
   /* Container wrapping original layout below the fold */
   .content-container {
-    padding: 40px 50px;
+    padding: 60px 50px;
+    max-width: 1000px;
+    margin: 0 auto;
   }
 
   h1 { font-size: 1.9em; margin-bottom: 4px; }
@@ -108,7 +125,7 @@
   /* 40 columns x 20 rows = 800 units, each cell forced to a true square */
   .grid-wrap {
     position: relative;
-    max-width: 1200px;
+    width: 100%;
   }
   .grid {
     display: grid;
@@ -177,29 +194,6 @@
     font-weight: bold;
     text-decoration: underline;
   }
-
-  .fullscreen-gif-overlay {
-    position: fixed;
-    inset: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 9999;
-    cursor: pointer;
-    padding: 0;
-  }
-  .fullscreen-gif-overlay.is-visible {
-    display: flex;
-  }
-  .fullscreen-gif-overlay img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    pointer-events: none;
-  }
 </style>
 </head>
 <body>
@@ -208,6 +202,10 @@
   <div class="hero-section">
     <img src="animation.gif" alt="Background GIF" id="hero-gif">
     <div class="hero-title">She says, he nods</div>
+    <div class="hero-subtitle">
+      Analyzing gender tropes in film with screen direction from 2,000 scripts.<br>
+      By <strong><u>Julia Silge</u></strong> + <strong><u>Russell Samora</u></strong> <strong><u>Amber Thomas</u></strong> <strong><u>Hanah Anderson</u></strong>
+    </div>
     <div class="scroll-hint">Scroll down ↓</div>
   </div>
 
@@ -226,10 +224,6 @@
       <div class="grid" id="grid"></div>
       <div id="tooltip"></div>
     </div>
-  </div>
-
-  <div class="fullscreen-gif-overlay" id="fullscreen-gif-overlay" aria-hidden="true">
-    <img id="fullscreen-gif-image" alt="Fullscreen GIF overlay" />
   </div>
 
   <script>
@@ -315,33 +309,6 @@
     const grid = document.getElementById("grid");
     const wrap = document.querySelector(".grid-wrap");
     const tooltip = document.getElementById("tooltip");
-    const fullscreenOverlay = document.getElementById("fullscreen-gif-overlay");
-    const fullscreenImage = document.getElementById("fullscreen-gif-image");
-    
-    // Relative path to local GIF file
-    const fullscreenGifUrl = "animation.gif";
-    let hasShownFullscreenGif = false;
-
-    function showFullscreenGif() {
-      if (hasShownFullscreenGif) return;
-      hasShownFullscreenGif = true;
-
-      fullscreenImage.src = fullscreenGifUrl;
-      fullscreenOverlay.classList.add("is-visible");
-      fullscreenOverlay.setAttribute("aria-hidden", "false");
-    }
-
-    document.addEventListener("click", showFullscreenGif, { once: true });
-    fullscreenOverlay.addEventListener("click", () => {
-      fullscreenOverlay.classList.remove("is-visible");
-      fullscreenOverlay.setAttribute("aria-hidden", "true");
-    });
-    document.addEventListener("keydown", e => {
-      if (e.key === "Escape") {
-        fullscreenOverlay.classList.remove("is-visible");
-        fullscreenOverlay.setAttribute("aria-hidden", "true");
-      }
-    });
 
     function buildTooltipContent(w) {
       tooltip.innerHTML = "";
